@@ -7,8 +7,8 @@ import { Inter } from 'next/font/google';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Booking App',
-  description: 'A simple booking application for scheduling meetings',
+  title: 'RoadTo150M Booking Schedule',
+  description: 'An easy-to-use booking application for scheduling meetings through Telegram',
 };
 
 export default function RootLayout({

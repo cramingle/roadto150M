@@ -1,6 +1,6 @@
-# Booking Web App
+# RoadTo150M Booking Schedule
 
-A modern, responsive web application for scheduling meetings and appointments, designed to work seamlessly with Telegram Mini Apps.
+A modern, responsive web application for scheduling meetings and appointments, designed to work seamlessly with Telegram Mini Apps. Built for the RoadTo150M project.
 
 ## Features
 

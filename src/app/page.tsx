@@ -18,7 +18,7 @@ export default function Home() {
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-16 text-center">
-      <h1 className="text-4xl font-bold mb-6">Welcome to the Booking App</h1>
+      <h1 className="text-4xl font-bold mb-6">Welcome to the RoadTo150M Booking Schedule</h1>
       <p className="text-xl text-gray-600 mb-8">
         This application helps you easily schedule meetings and appointments.
       </p>
