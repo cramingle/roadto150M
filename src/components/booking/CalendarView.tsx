@@ -10,6 +10,8 @@ interface CalendarViewProps {
   onSelectDate: (date: string) => void;
 }
 
+type CalendarValue = Date | null | [Date | null, Date | null];
+
 export const CalendarView: React.FC<CalendarViewProps> = ({
   availableDates,
   selectedDate,
@@ -19,10 +21,12 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
   const availableDateSet = new Set(availableDates.map(d => d.date));
   
   // Handle date change
-  const handleDateChange = (value: Date) => {
-    const formattedDate = format(value, 'yyyy-MM-dd');
-    if (availableDateSet.has(formattedDate)) {
-      onSelectDate(formattedDate);
+  const handleDateChange = (value: CalendarValue) => {
+    if (value instanceof Date) {
+      const formattedDate = format(value, 'yyyy-MM-dd');
+      if (availableDateSet.has(formattedDate)) {
+        onSelectDate(formattedDate);
+      }
     }
   };
   
@@ -49,7 +53,7 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
           onChange={handleDateChange}
           value={selectedDate ? parseISO(selectedDate) : null}
           tileContent={tileContent}
-          tileDisabled={({ date }) => !availableDateSet.has(format(date, 'yyyy-MM-dd'))}
+          tileDisabled={({ date }: { date: Date }) => !availableDateSet.has(format(date, 'yyyy-MM-dd'))}
           minDate={new Date()}
           maxDate={new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)} // 30 days from now
           className="react-calendar"
