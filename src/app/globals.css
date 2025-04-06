@@ -1,0 +1,116 @@
+@import "tailwindcss/preflight";
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Base styling */
+@layer base {
+  body {
+    color: #1f2937;
+    background-color: #f9fafb;
+  }
+}
+
+/* Calendar custom styling */
+.react-calendar {
+  width: 100%;
+  background-color: white;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.react-calendar__navigation {
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.react-calendar__navigation button {
+  min-width: 2.5rem;
+  color: #4b5563;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+}
+
+.react-calendar__navigation button:hover:enabled {
+  background-color: #f3f4f6;
+}
+
+.react-calendar__navigation button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.react-calendar__navigation__label {
+  font-weight: 500;
+  font-size: 1.125rem;
+}
+
+.react-calendar__month-view__weekdays {
+  margin-bottom: 0.5rem;
+}
+
+.react-calendar__month-view__weekdays__weekday {
+  text-align: center;
+  font-size: 0.875rem;
+  color: #6b7280;
+  padding: 0.25rem 0;
+}
+
+.react-calendar__month-view__weekdays__weekday abbr {
+  text-decoration: none;
+}
+
+.react-calendar__tile {
+  border-radius: 9999px;
+  padding: 0.5rem;
+  text-align: center;
+  font-size: 0.875rem;
+}
+
+.react-calendar__tile:hover:enabled {
+  background-color: #eff6ff;
+}
+
+.react-calendar__tile--active {
+  background-color: #2563eb;
+  color: white;
+}
+
+.react-calendar__tile--active:hover:enabled {
+  background-color: #1d4ed8;
+}
+
+.react-calendar__tile--now {
+  background-color: #fefce8;
+}
+
+.react-calendar__tile:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
