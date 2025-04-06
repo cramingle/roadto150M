@@ -30,6 +30,43 @@ enum BookingStep {
   ERROR
 }
 
+function getErrorDetails(errorCode: string): { title: string; message: string; action: string } {
+  const errors = {
+    'no_token': {
+      title: 'Missing Booking Token',
+      message: 'A valid booking token is required to access this page.',
+      action: 'Please use the link provided to you or contact the meeting host.'
+    },
+    'invalid_token': {
+      title: 'Invalid Booking Token',
+      message: 'The booking token is invalid or has expired.',
+      action: 'Please request a new booking link from the meeting host.'
+    },
+    'no_slots': {
+      title: 'No Available Slots',
+      message: 'There are no available time slots for the selected date.',
+      action: 'Please select a different date or contact the meeting host.'
+    },
+    'booking_failed': {
+      title: 'Booking Failed',
+      message: 'We couldn\'t complete your booking at this time.',
+      action: 'Please try again or contact the meeting host directly.'
+    },
+    'missing_info': {
+      title: 'Missing Information',
+      message: 'Some required booking information is missing.',
+      action: 'Please start the booking process again from the beginning.'
+    },
+    'default': {
+      title: 'Something Went Wrong',
+      message: 'An unexpected error occurred during the booking process.',
+      action: 'Please refresh the page or try again later.'
+    }
+  };
+  
+  return errors[errorCode as keyof typeof errors] || errors.default;
+}
+
 export default function BookingPage() {
   const router = useRouter();
   const [step, setStep] = useState<BookingStep>(BookingStep.LOADING);
@@ -57,7 +94,7 @@ export default function BookingPage() {
         }
         
         if (!tokenValue) {
-          setError('No booking token provided');
+          setError('no_token');
           setStep(BookingStep.ERROR);
           return;
         }
@@ -67,7 +104,7 @@ export default function BookingPage() {
         // Validate token
         const isValid = await validateToken(tokenValue);
         if (!isValid) {
-          setError('Invalid or expired booking link');
+          setError('invalid_token');
           setStep(BookingStep.ERROR);
           return;
         }
@@ -80,7 +117,7 @@ export default function BookingPage() {
         setStep(BookingStep.SELECT_DATE);
       } catch (error) {
         console.error('Error initializing booking:', error);
-        setError('Failed to initialize booking');
+        setError('default');
         setStep(BookingStep.ERROR);
       }
     };
@@ -96,12 +133,19 @@ export default function BookingPage() {
       if (token) {
         const slots = await getTimeSlots(token, date);
         setTimeSlots(slots);
+        
+        if (slots.length === 0) {
+          setError('no_slots');
+          setStep(BookingStep.ERROR);
+          return;
+        }
+        
         setSelectedSlot(null);
         setStep(BookingStep.SELECT_TIME);
       }
     } catch (error) {
       console.error('Error fetching time slots:', error);
-      setError('Failed to fetch available times');
+      setError('default');
       setStep(BookingStep.ERROR);
     }
   };
@@ -116,7 +160,8 @@ export default function BookingPage() {
   const handleSubmitForm = async (formData: BookingFormData) => {
     try {
       if (!token || !selectedDate || !selectedSlot) {
-        setError('Missing booking information');
+        setError('missing_info');
+        setStep(BookingStep.ERROR);
         return;
       }
       
@@ -137,11 +182,13 @@ export default function BookingPage() {
         // Redirect to confirmation page
         router.push(`/confirmation?booking_id=${result.booking_id}`);
       } else {
-        setError(result.error || 'Failed to create booking');
+        setError('booking_failed');
+        setStep(BookingStep.ERROR);
       }
     } catch (error) {
       console.error('Error creating booking:', error);
-      setError('Failed to create booking');
+      setError('booking_failed');
+      setStep(BookingStep.ERROR);
     }
   };
   
@@ -195,15 +242,33 @@ export default function BookingPage() {
         );
         
       case BookingStep.ERROR:
+        const errorDetails = getErrorDetails(error || 'default');
         return (
-          <div className="tg-secondary-bg border border-red-300 rounded-xl p-5 text-center">
-            <p className="text-red-600 font-medium mb-4">{error || 'An error occurred'}</p>
-            <button
-              onClick={() => router.refresh()}
-              className="tg-button py-2 px-4"
-            >
-              Try Again
-            </button>
+          <div className="bg-gray-50 border border-red-200 rounded-xl p-6 text-center">
+            <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8 text-red-500">
+                <path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-1.72 6.97a.75.75 0 10-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 101.06 1.06L12 13.06l1.72 1.72a.75.75 0 101.06-1.06L13.06 12l1.72-1.72a.75.75 0 10-1.06-1.06L12 10.94l-1.72-1.72z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <h3 className="text-lg font-semibold text-red-600 mb-2">{errorDetails.title}</h3>
+            <p className="text-gray-700 mb-3">{errorDetails.message}</p>
+            <p className="text-sm text-gray-600 mb-5">{errorDetails.action}</p>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <button
+                onClick={() => router.refresh()}
+                className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg transition-colors"
+              >
+                Try Again
+              </button>
+              <a
+                href="https://t.me/roadto150MBot"
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="bg-gray-200 hover:bg-gray-300 text-gray-800 py-2 px-4 rounded-lg transition-colors"
+              >
+                Contact Host
+              </a>
+            </div>
           </div>
         );
         
