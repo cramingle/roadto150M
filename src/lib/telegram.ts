@@ -47,15 +47,23 @@ export const getTelegramUser = () => {
   return null;
 };
 
-// Get token from Telegram start parameter
+// Get token from Telegram start parameter or URL query
 export const getBookingToken = () => {
+  let token = null;
+  
+  // First try to get from Telegram WebApp
   if (typeof window !== 'undefined' && window.Telegram) {
-    return window.Telegram.WebApp.initDataUnsafe.start_param;
+    token = window.Telegram.WebApp.initDataUnsafe.start_param;
+    if (token) return token;
   }
   
-  // Fallback to URL query parameter
-  const urlParams = new URLSearchParams(window.location.search);
-  return urlParams.get('token');
+  // Then try URL query parameter
+  if (typeof window !== 'undefined') {
+    const urlParams = new URLSearchParams(window.location.search);
+    token = urlParams.get('token');
+  }
+  
+  return token;
 };
 
 // Show Telegram main button

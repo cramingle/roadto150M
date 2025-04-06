@@ -48,7 +48,14 @@ export default function BookingPage() {
         initTelegramWebApp();
         
         // Get token from URL or Telegram
-        const tokenValue = getBookingToken();
+        let tokenValue = getBookingToken();
+        
+        // If token not found from WebApp or URL params, check directly
+        if (!tokenValue && typeof window !== 'undefined') {
+          const urlParams = new URLSearchParams(window.location.search);
+          tokenValue = urlParams.get('token');
+        }
+        
         if (!tokenValue) {
           setError('No booking token provided');
           setStep(BookingStep.ERROR);

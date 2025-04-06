@@ -10,7 +10,15 @@ export default function Home() {
   
   // Check for token and redirect if available
   useEffect(() => {
-    const token = getBookingToken();
+    // First try to get token from Telegram WebApp
+    let token = getBookingToken();
+    
+    // If not found in WebApp, check URL query params directly
+    if (!token && typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      token = urlParams.get('token');
+    }
+    
     if (token) {
       router.push(`/booking?token=${token}`);
     }
