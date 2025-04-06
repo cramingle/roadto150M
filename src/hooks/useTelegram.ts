@@ -5,7 +5,8 @@ import {
   getBookingToken,
   showMainButton,
   hideMainButton,
-  closeWebApp
+  closeWebApp,
+  applyTelegramTheme
 } from '@/lib/telegram';
 
 interface TelegramUser {
@@ -25,6 +26,9 @@ export const useTelegram = () => {
     if (typeof window !== 'undefined') {
       // Initialize Telegram Web App
       initTelegramWebApp();
+      
+      // Apply Telegram theme after hydration
+      applyTelegramTheme();
       
       // Get user data
       const telegramUser = getTelegramUser();

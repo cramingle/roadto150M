@@ -44,23 +44,23 @@ export default function Home() {
         Schedule meetings with ease
       </p>
       
-      <div className="rounded-xl tg-secondary-bg p-5 mb-8">
+      <div className="rounded-xl bg-gray-100 p-5 mb-8">
         <h2 className="text-xl font-semibold mb-3">How it works</h2>
         <ol className="text-left space-y-3 mb-4">
           <li className="flex gap-2">
-            <span className="flex-shrink-0 h-6 w-6 rounded-full bg-blue-500 flex items-center justify-center text-white">1</span>
+            <span className="flex-shrink-0 h-6 w-6 rounded-full bg-blue-500 flex items-center justify-center text-white font-medium">1</span>
             <span>Access via Telegram bot invitation</span>
           </li>
           <li className="flex gap-2">
-            <span className="flex-shrink-0 h-6 w-6 rounded-full bg-blue-500 flex items-center justify-center text-white">2</span>
+            <span className="flex-shrink-0 h-6 w-6 rounded-full bg-blue-500 flex items-center justify-center text-white font-medium">2</span>
             <span>Select an available date</span>
           </li>
           <li className="flex gap-2">
-            <span className="flex-shrink-0 h-6 w-6 rounded-full bg-blue-500 flex items-center justify-center text-white">3</span>
+            <span className="flex-shrink-0 h-6 w-6 rounded-full bg-blue-500 flex items-center justify-center text-white font-medium">3</span>
             <span>Choose your preferred time slot</span>
           </li>
           <li className="flex gap-2">
-            <span className="flex-shrink-0 h-6 w-6 rounded-full bg-blue-500 flex items-center justify-center text-white">4</span>
+            <span className="flex-shrink-0 h-6 w-6 rounded-full bg-blue-500 flex items-center justify-center text-white font-medium">4</span>
             <span>Fill details and confirm booking</span>
           </li>
         </ol>
@@ -70,8 +70,8 @@ export default function Home() {
         </p>
       </div>
       
-      <Link href="/booking" className="tg-button inline-block py-3 px-8">
-        Try Demo Booking
+      <Link href="/booking" className="inline-block py-3 px-8 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600 transition-colors">
+        Book Now
       </Link>
     </div>
   );

@@ -1,6 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  // Suppress hydration warnings
+  compiler: {
+    styledComponents: true, // Better CSS-in-JS handling
+  },
   images: {
     domains: ['t.me'], // Allow images from Telegram
     remotePatterns: [

@@ -15,9 +15,7 @@
   }
 
   body {
-    @apply text-gray-900;
-    background-color: var(--tg-theme-bg-color);
-    color: var(--tg-theme-text-color);
+    @apply text-gray-900 bg-white;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overscroll-behavior: none;
@@ -27,162 +25,116 @@
   }
   
   h1, h2, h3, h4, h5, h6 {
-    color: var(--tg-theme-text-color);
+    @apply text-gray-900 font-semibold;
   }
   
   button {
-    border-radius: 8px;
+    @apply rounded-lg;
   }
   
   a {
-    color: var(--tg-theme-link-color);
+    @apply text-blue-600;
   }
 }
 
-/* Telegram Mini App theme class */
-.tg-button {
-  background-color: var(--tg-theme-button-color);
-  color: var(--tg-theme-button-text-color);
-  border: none;
-  border-radius: 8px;
-  padding: 0.75rem 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.1s ease;
-}
+/* Custom components */
+@layer components {
+  .tg-button {
+    @apply bg-blue-500 text-white border-none rounded-lg py-3 px-4 font-medium cursor-pointer transition-all duration-100 ease-in-out;
+  }
 
-.tg-button:hover {
-  opacity: 0.9;
-}
+  .tg-button:hover {
+    @apply opacity-90;
+  }
 
-.tg-button:active {
-  transform: scale(0.98);
-}
+  .tg-button:active {
+    @apply scale-[0.98];
+  }
 
-.tg-secondary-bg {
-  background-color: var(--tg-theme-secondary-bg-color);
+  .tg-secondary-bg {
+    @apply bg-gray-100;
+  }
+
+  /* Form styles */
+  .form-input {
+    @apply w-full py-3 px-4 border border-gray-200 rounded-lg bg-white text-gray-900 transition-all duration-200;
+  }
+
+  .form-input:focus {
+    @apply outline-none border-blue-500 shadow-[0_0_0_2px_rgba(36,129,204,0.2)];
+  }
+
+  /* Time slot styles */
+  .time-slot {
+    @apply p-3 rounded-lg font-medium text-center transition-all duration-200 border border-gray-200 bg-white;
+  }
+
+  .time-slot:hover {
+    @apply bg-gray-100;
+  }
+
+  .time-slot.selected {
+    @apply bg-blue-500 text-white border-blue-500;
+  }
 }
 
 /* Calendar custom styling */
 .react-calendar {
-  width: 100%;
-  background-color: var(--tg-theme-bg-color);
-  padding: 1rem;
-  border-radius: 12px;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  font-family: inherit;
+  @apply w-full bg-white p-4 rounded-xl border border-gray-100 shadow-sm font-sans;
 }
 
 .react-calendar__navigation {
-  margin-bottom: 1rem;
-  display: flex;
-  justify-content: space-between;
+  @apply mb-4 flex justify-between;
 }
 
 .react-calendar__navigation button {
-  min-width: 2.5rem;
-  color: var(--tg-theme-text-color);
-  padding: 0.25rem;
-  border-radius: 8px;
+  @apply min-w-10 text-gray-900 p-1 rounded-lg;
 }
 
 .react-calendar__navigation button:hover:enabled {
-  background-color: var(--tg-theme-secondary-bg-color);
+  @apply bg-gray-100;
 }
 
 .react-calendar__navigation button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+  @apply opacity-50 cursor-not-allowed;
 }
 
 .react-calendar__navigation__label {
-  font-weight: 600;
-  font-size: 1.125rem;
+  @apply font-semibold text-lg;
 }
 
 .react-calendar__month-view__weekdays {
-  margin-bottom: 0.5rem;
+  @apply mb-2;
 }
 
 .react-calendar__month-view__weekdays__weekday {
-  text-align: center;
-  font-size: 0.875rem;
-  color: var(--tg-theme-hint-color);
-  padding: 0.25rem 0;
+  @apply text-center text-sm text-gray-500 py-1;
 }
 
 .react-calendar__month-view__weekdays__weekday abbr {
-  text-decoration: none;
+  @apply no-underline;
 }
 
 .react-calendar__tile {
-  border-radius: 50%;
-  aspect-ratio: 1;
-  padding: 0.5rem;
-  text-align: center;
-  font-size: 0.875rem;
-  margin: 2px;
+  @apply rounded-full aspect-square p-2 text-center text-sm m-0.5;
 }
 
 .react-calendar__tile:hover:enabled {
-  background-color: rgba(36, 129, 204, 0.1);
+  @apply bg-blue-100;
 }
 
 .react-calendar__tile--active {
-  background-color: var(--tg-theme-button-color);
-  color: var(--tg-theme-button-text-color);
-  font-weight: 500;
+  @apply bg-blue-500 text-white font-medium;
 }
 
 .react-calendar__tile--active:hover:enabled {
-  background-color: var(--tg-theme-button-color);
-  opacity: 0.9;
+  @apply bg-blue-500 opacity-90;
 }
 
 .react-calendar__tile--now {
-  background-color: rgba(36, 129, 204, 0.15);
+  @apply bg-blue-100;
 }
 
 .react-calendar__tile:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
-
-/* Form styles */
-.form-input {
-  width: 100%;
-  padding: 0.75rem 1rem;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  background-color: var(--tg-theme-bg-color);
-  color: var(--tg-theme-text-color);
-  transition: border-color 0.2s ease;
-}
-
-.form-input:focus {
-  outline: none;
-  border-color: var(--tg-theme-button-color);
-  box-shadow: 0 0 0 2px rgba(36, 129, 204, 0.2);
-}
-
-/* Time slot styles */
-.time-slot {
-  padding: 12px;
-  border-radius: 8px;
-  font-weight: 500;
-  text-align: center;
-  transition: all 0.2s ease;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  background-color: var(--tg-theme-bg-color);
-}
-
-.time-slot:hover {
-  background-color: var(--tg-theme-secondary-bg-color);
-}
-
-.time-slot.selected {
-  background-color: var(--tg-theme-button-color);
-  color: var(--tg-theme-button-text-color);
-  border-color: var(--tg-theme-button-color);
+  @apply opacity-40 cursor-not-allowed;
 }
