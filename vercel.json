@@ -1,0 +1,21 @@
+{
+  "version": 2,
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "frame-ancestors https://*.telegram.org https://telegram.org https://*.telegram.me https://telegram.me;"
+        }
+      ]
+    }
+  ],
+  "env": {
+    "NEXT_PUBLIC_API_URL": "REPLACE_WITH_YOUR_API_URL"
+  }
+} 
