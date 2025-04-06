@@ -34,19 +34,21 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
   const tileContent = ({ date, view }: { date: Date; view: string }) => {
     if (view === 'month') {
       const formattedDate = format(date, 'yyyy-MM-dd');
-      const isAvailable = availableDateSet.has(formattedDate);
+      const dateObj = availableDates.find(d => d.date === formattedDate);
       
-      return (
-        <div className={`${isAvailable ? 'bg-green-100 rounded-full' : ''}`}>
-          {date.getDate()}
-        </div>
-      );
+      if (dateObj?.has_slots) {
+        return (
+          <div className="w-full h-full flex items-center justify-center relative">
+            <span className="absolute bottom-0 w-1.5 h-1.5 rounded-full bg-green-500 mb-0.5"></span>
+          </div>
+        );
+      }
     }
     return null;
   };
   
   return (
-    <div className="mb-8">
+    <div className="mb-6">
       <h2 className="text-xl font-semibold mb-4">Select a Date</h2>
       <div className="calendar-container">
         <Calendar
@@ -57,11 +59,14 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
           minDate={new Date()}
           maxDate={new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)} // 30 days from now
           className="react-calendar"
+          prev2Label={null}
+          next2Label={null}
+          minDetail="month"
         />
       </div>
       
       {selectedDate && (
-        <div className="mt-4 p-3 bg-blue-50 rounded-md">
+        <div className="mt-4 p-3 tg-secondary-bg rounded-lg">
           <p className="font-medium">
             Selected: {format(parseISO(selectedDate), 'EEEE, MMMM d, yyyy')}
           </p>

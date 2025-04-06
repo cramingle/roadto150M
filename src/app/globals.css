@@ -2,21 +2,76 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Base styling */
+/* Base styling optimized for Telegram Mini App */
 @layer base {
-  body {
-    @apply text-gray-900 bg-gray-50;
+  :root {
+    --tg-theme-bg-color: #ffffff;
+    --tg-theme-text-color: #000000;
+    --tg-theme-hint-color: #999999;
+    --tg-theme-link-color: #2481cc;
+    --tg-theme-button-color: #2481cc;
+    --tg-theme-button-text-color: #ffffff;
+    --tg-theme-secondary-bg-color: #f0f0f0;
   }
+
+  body {
+    @apply text-gray-900;
+    background-color: var(--tg-theme-bg-color);
+    color: var(--tg-theme-text-color);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overscroll-behavior: none;
+    overflow-x: hidden;
+    padding: 0;
+    margin: 0;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--tg-theme-text-color);
+  }
+  
+  button {
+    border-radius: 8px;
+  }
+  
+  a {
+    color: var(--tg-theme-link-color);
+  }
+}
+
+/* Telegram Mini App theme class */
+.tg-button {
+  background-color: var(--tg-theme-button-color);
+  color: var(--tg-theme-button-text-color);
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.1s ease;
+}
+
+.tg-button:hover {
+  opacity: 0.9;
+}
+
+.tg-button:active {
+  transform: scale(0.98);
+}
+
+.tg-secondary-bg {
+  background-color: var(--tg-theme-secondary-bg-color);
 }
 
 /* Calendar custom styling */
 .react-calendar {
   width: 100%;
-  background-color: white;
+  background-color: var(--tg-theme-bg-color);
   padding: 1rem;
-  border-radius: 0.5rem;
-  border: 1px solid #e5e7eb;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  font-family: inherit;
 }
 
 .react-calendar__navigation {
@@ -27,13 +82,13 @@
 
 .react-calendar__navigation button {
   min-width: 2.5rem;
-  color: #4b5563;
+  color: var(--tg-theme-text-color);
   padding: 0.25rem;
-  border-radius: 0.25rem;
+  border-radius: 8px;
 }
 
 .react-calendar__navigation button:hover:enabled {
-  background-color: #f3f4f6;
+  background-color: var(--tg-theme-secondary-bg-color);
 }
 
 .react-calendar__navigation button:disabled {
@@ -42,7 +97,7 @@
 }
 
 .react-calendar__navigation__label {
-  font-weight: 500;
+  font-weight: 600;
   font-size: 1.125rem;
 }
 
@@ -53,7 +108,7 @@
 .react-calendar__month-view__weekdays__weekday {
   text-align: center;
   font-size: 0.875rem;
-  color: #6b7280;
+  color: var(--tg-theme-hint-color);
   padding: 0.25rem 0;
 }
 
@@ -62,30 +117,72 @@
 }
 
 .react-calendar__tile {
-  border-radius: 9999px;
+  border-radius: 50%;
+  aspect-ratio: 1;
   padding: 0.5rem;
   text-align: center;
   font-size: 0.875rem;
+  margin: 2px;
 }
 
 .react-calendar__tile:hover:enabled {
-  background-color: #eff6ff;
+  background-color: rgba(36, 129, 204, 0.1);
 }
 
 .react-calendar__tile--active {
-  background-color: #2563eb;
-  color: white;
+  background-color: var(--tg-theme-button-color);
+  color: var(--tg-theme-button-text-color);
+  font-weight: 500;
 }
 
 .react-calendar__tile--active:hover:enabled {
-  background-color: #1d4ed8;
+  background-color: var(--tg-theme-button-color);
+  opacity: 0.9;
 }
 
 .react-calendar__tile--now {
-  background-color: #fefce8;
+  background-color: rgba(36, 129, 204, 0.15);
 }
 
 .react-calendar__tile:disabled {
-  opacity: 0.5;
+  opacity: 0.4;
   cursor: not-allowed;
+}
+
+/* Form styles */
+.form-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  background-color: var(--tg-theme-bg-color);
+  color: var(--tg-theme-text-color);
+  transition: border-color 0.2s ease;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--tg-theme-button-color);
+  box-shadow: 0 0 0 2px rgba(36, 129, 204, 0.2);
+}
+
+/* Time slot styles */
+.time-slot {
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 500;
+  text-align: center;
+  transition: all 0.2s ease;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: var(--tg-theme-bg-color);
+}
+
+.time-slot:hover {
+  background-color: var(--tg-theme-secondary-bg-color);
+}
+
+.time-slot.selected {
+  background-color: var(--tg-theme-button-color);
+  color: var(--tg-theme-button-text-color);
+  border-color: var(--tg-theme-button-color);
 }

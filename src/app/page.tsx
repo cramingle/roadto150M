@@ -1,15 +1,18 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { getBookingToken } from '@/lib/telegram';
+import { getBookingToken, initTelegramWebApp } from '@/lib/telegram';
 
 export default function Home() {
   const router = useRouter();
+  const [loading, setLoading] = useState(true);
   
-  // Check for token and redirect if available
+  // Initialize Telegram web app and check for token
   useEffect(() => {
+    initTelegramWebApp();
+    
     // First try to get token from Telegram WebApp
     let token = getBookingToken();
     
@@ -21,43 +24,53 @@ export default function Home() {
     
     if (token) {
       router.push(`/booking?token=${token}`);
+    } else {
+      setLoading(false);
     }
   }, [router]);
 
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-[70vh]">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
+
   return (
-    <div className="max-w-3xl mx-auto px-4 py-16 text-center">
-      <h1 className="text-4xl font-bold mb-6">Welcome to the RoadTo150M Booking Schedule</h1>
-      <p className="text-xl text-gray-600 mb-8">
-        This application helps you easily schedule meetings and appointments.
+    <div className="px-4 py-8 text-center">
+      <h1 className="text-3xl font-bold mb-4">RoadTo150M Booking</h1>
+      <p className="text-lg mb-8 text-gray-600">
+        Schedule meetings with ease
       </p>
       
-      <div className="bg-white rounded-lg shadow-md p-6 mb-10">
-        <h2 className="text-2xl font-semibold mb-4">How it works</h2>
-        <ol className="text-left space-y-4 mb-6">
-          <li className="flex gap-3">
-            <span className="flex-shrink-0 h-6 w-6 rounded-full bg-blue-600 flex items-center justify-center text-white">1</span>
-            <span>Access the application through a Telegram bot invitation</span>
+      <div className="rounded-xl tg-secondary-bg p-5 mb-8">
+        <h2 className="text-xl font-semibold mb-3">How it works</h2>
+        <ol className="text-left space-y-3 mb-4">
+          <li className="flex gap-2">
+            <span className="flex-shrink-0 h-6 w-6 rounded-full bg-blue-500 flex items-center justify-center text-white">1</span>
+            <span>Access via Telegram bot invitation</span>
           </li>
-          <li className="flex gap-3">
-            <span className="flex-shrink-0 h-6 w-6 rounded-full bg-blue-600 flex items-center justify-center text-white">2</span>
-            <span>Select an available date from the calendar</span>
+          <li className="flex gap-2">
+            <span className="flex-shrink-0 h-6 w-6 rounded-full bg-blue-500 flex items-center justify-center text-white">2</span>
+            <span>Select an available date</span>
           </li>
-          <li className="flex gap-3">
-            <span className="flex-shrink-0 h-6 w-6 rounded-full bg-blue-600 flex items-center justify-center text-white">3</span>
-            <span>Choose a time slot that works for you</span>
+          <li className="flex gap-2">
+            <span className="flex-shrink-0 h-6 w-6 rounded-full bg-blue-500 flex items-center justify-center text-white">3</span>
+            <span>Choose your preferred time slot</span>
           </li>
-          <li className="flex gap-3">
-            <span className="flex-shrink-0 h-6 w-6 rounded-full bg-blue-600 flex items-center justify-center text-white">4</span>
-            <span>Fill in your information and confirm the booking</span>
+          <li className="flex gap-2">
+            <span className="flex-shrink-0 h-6 w-6 rounded-full bg-blue-500 flex items-center justify-center text-white">4</span>
+            <span>Fill details and confirm booking</span>
           </li>
         </ol>
         
-        <p className="italic text-gray-500 text-sm">
-          Note: This application is designed to be accessed through a Telegram bot. If you're seeing this page directly, please contact the administrator for a proper booking link.
+        <p className="italic text-sm text-gray-500 mt-2">
+          This app is designed for Telegram Mini Apps.
         </p>
       </div>
       
-      <Link href="/booking" className="inline-block bg-blue-600 text-white py-3 px-8 rounded-md hover:bg-blue-700 transition-colors">
+      <Link href="/booking" className="tg-button inline-block py-3 px-8">
         Try Demo Booking
       </Link>
     </div>

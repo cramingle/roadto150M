@@ -196,11 +196,11 @@ export default function BookingPage() {
         
       case BookingStep.ERROR:
         return (
-          <div className="bg-red-50 border border-red-200 rounded-md p-4 text-center">
-            <p className="text-red-600 font-medium">{error || 'An error occurred'}</p>
+          <div className="tg-secondary-bg border border-red-300 rounded-xl p-5 text-center">
+            <p className="text-red-600 font-medium mb-4">{error || 'An error occurred'}</p>
             <button
               onClick={() => router.refresh()}
-              className="mt-3 bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors"
+              className="tg-button py-2 px-4"
             >
               Try Again
             </button>
@@ -213,7 +213,7 @@ export default function BookingPage() {
   };
   
   return (
-    <div className="max-w-lg mx-auto px-4 py-8">
+    <div className="max-w-lg mx-auto">
       <h1 className="text-2xl font-bold mb-6 text-center">Book a Meeting</h1>
       {renderContent()}
     </div>

@@ -26,6 +26,17 @@ declare global {
           disable: () => void;
           onClick: (callback: () => void) => void;
         };
+        themeParams: {
+          bg_color: string;
+          text_color: string;
+          hint_color: string;
+          link_color: string;
+          button_color: string;
+          button_text_color: string;
+          secondary_bg_color: string;
+        };
+        setHeaderColor: (color: string) => void;
+        setBackgroundColor: (color: string) => void;
       };
     };
   }
@@ -36,6 +47,26 @@ export const initTelegramWebApp = () => {
   if (typeof window !== 'undefined' && window.Telegram) {
     window.Telegram.WebApp.ready();
     window.Telegram.WebApp.expand();
+    
+    // Apply Telegram theme colors to CSS variables
+    const themeParams = window.Telegram.WebApp.themeParams;
+    if (themeParams) {
+      document.documentElement.style.setProperty('--tg-theme-bg-color', themeParams.bg_color);
+      document.documentElement.style.setProperty('--tg-theme-text-color', themeParams.text_color);
+      document.documentElement.style.setProperty('--tg-theme-hint-color', themeParams.hint_color);
+      document.documentElement.style.setProperty('--tg-theme-link-color', themeParams.link_color);
+      document.documentElement.style.setProperty('--tg-theme-button-color', themeParams.button_color);
+      document.documentElement.style.setProperty('--tg-theme-button-text-color', themeParams.button_text_color);
+      document.documentElement.style.setProperty('--tg-theme-secondary-bg-color', themeParams.secondary_bg_color);
+    }
+    
+    // Set header color to match theme
+    try {
+      window.Telegram.WebApp.setHeaderColor(themeParams.bg_color);
+      window.Telegram.WebApp.setBackgroundColor(themeParams.bg_color);
+    } catch (error) {
+      console.log('Setting header/background color not supported');
+    }
   }
 };
 
