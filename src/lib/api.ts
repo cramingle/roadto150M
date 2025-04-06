@@ -14,6 +14,37 @@ export interface DateInfo {
   has_slots: boolean;
 }
 
+// New interfaces for progress analytics
+export interface PerformanceMetrics {
+  avg_gain: number;
+  avg_gain_percent_of_target: number;
+  cycles_above_target: number;
+  cycles_success_rate: number;
+  bot_uptime_percent: number;
+  kid_interruption_hours: number;
+  gym_attendance_percent: number;
+  sleep_average_hours: number;
+}
+
+export interface ProgressMetrics {
+  daily_growth: number;
+  annual_growth: number;
+  years_to_goal: number;
+  estimated_completion_date: string;
+  current_value: number;
+  progress_percent: number;
+}
+
+export interface ProgressData {
+  stats: any;
+  formatted: {
+    performance: PerformanceMetrics;
+    progress: ProgressMetrics;
+  };
+  initial_investment: number;
+  target_gain: number;
+}
+
 // Validate booking token
 export const validateToken = async (token: string): Promise<boolean> => {
   try {
@@ -44,6 +75,22 @@ export const getTimeSlots = async (token: string, date: string): Promise<TimeSlo
   } catch (error) {
     console.error('Error fetching time slots:', error);
     return [];
+  }
+};
+
+// Get progress analytics data
+export const getProgressAnalytics = async (token: string): Promise<ProgressData | null> => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/api/progress/stats?token=${token}`);
+    if (response.data.status === 'ok') {
+      return response.data.data;
+    } else {
+      console.error('Error fetching progress data:', response.data.message);
+      return null;
+    }
+  } catch (error) {
+    console.error('Error fetching progress analytics:', error);
+    return null;
   }
 };
 
